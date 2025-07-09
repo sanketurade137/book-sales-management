@@ -3,20 +3,20 @@ package com.accenture.booksales.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity // Marks this class as a JPA entity mapped to a "purchase" table
 public class Purchase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Unique identifier for each purchase
+    private Long id; // Unique identifier for each purchase record
 
-    private String username; // Username of the purchaser
+    private String username; // Username of the user who purchased the book
 
-    @ManyToOne
-    @JoinColumn(name = "book_id") // Foreign key to the Book entity
+    @ManyToOne // Many purchases can be linked to one book
+    @JoinColumn(name = "book_id") // Defines the foreign key column for the Book entity
     private Book book;
 
-    private LocalDateTime timestamp; // Time of purchase
+    private LocalDateTime timestamp; // Date and time when the purchase occurred
 
     // Getters and Setters
     public Long getId() {

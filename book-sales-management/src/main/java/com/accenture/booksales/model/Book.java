@@ -12,11 +12,11 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-    private double price;
-    private String description;
+    private String title;       // Title of the book
+    private double price;       // Price of the book
+    private String description; // Short description about the book
 
-    public Book() {}
+    public Book() {} // Default constructor required by JPA
 
     public Book(String title, double price, String description) {
         this.title = title;

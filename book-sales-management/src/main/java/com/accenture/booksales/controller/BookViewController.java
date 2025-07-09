@@ -22,6 +22,7 @@ public class BookViewController {
     @Autowired
     private PurchaseRepository purchaseRepository;
 
+    // Admin: View all books or search by title
     @GetMapping("/books/view")
     public String viewBooks(@RequestParam(required = false) String keyword,
                             HttpSession session,
@@ -39,6 +40,7 @@ public class BookViewController {
         return "book-list";
     }
 
+    // User: View all books or search by title
     @GetMapping("/books/user")
     public String userBookView(@RequestParam(required = false) String keyword,
                                HttpSession session,
@@ -56,6 +58,7 @@ public class BookViewController {
         return "book-list";
     }
 
+    // Admin: Show add book form
     @GetMapping("/books/add")
     public String showAddForm(HttpSession session, Model model) {
         if (!"admin".equals(session.getAttribute("role"))) return "redirect:/login";
@@ -63,6 +66,7 @@ public class BookViewController {
         return "book-form";
     }
 
+    // Admin: Add book to repository
     @PostMapping("/books/add")
     public String addBook(@ModelAttribute Book book, HttpSession session) {
         if (!"admin".equals(session.getAttribute("role"))) return "redirect:/login";
@@ -70,6 +74,7 @@ public class BookViewController {
         return "redirect:/books/view";
     }
 
+    // Admin: Delete book after checking it's not purchased
     @GetMapping("/books/delete/{id}")
     public String deleteBook(@PathVariable Long id, HttpSession session, RedirectAttributes redirectAttributes) {
         if (!"admin".equals(session.getAttribute("role"))) return "redirect:/login";
@@ -88,6 +93,7 @@ public class BookViewController {
         return "redirect:/books/view";
     }
 
+    // Admin: Show edit book form
     @GetMapping("/books/edit/{id}")
     public String showEditForm(@PathVariable Long id, HttpSession session, Model model) {
         if (!"admin".equals(session.getAttribute("role"))) return "redirect:/login";
@@ -97,6 +103,7 @@ public class BookViewController {
         return "book-form";
     }
 
+    // Admin: Update existing book
     @PostMapping("/books/update")
     public String updateBook(@ModelAttribute Book book, HttpSession session) {
         if (!"admin".equals(session.getAttribute("role"))) return "redirect:/login";
@@ -104,6 +111,7 @@ public class BookViewController {
         return "redirect:/books/view";
     }
 
+    // User: Buy a book and save purchase record
     @GetMapping("/books/buy/{id}")
     public String buyBook(@PathVariable Long id, HttpSession session, Model model) {
         String username = (String) session.getAttribute("username");
@@ -123,6 +131,7 @@ public class BookViewController {
         return "buy-success";
     }
 
+    // User: View their purchase history
     @GetMapping("/books/purchases")
     public String viewMyPurchases(HttpSession session, Model model) {
         String role = (String) session.getAttribute("role");
@@ -134,6 +143,7 @@ public class BookViewController {
         return "purchase-history";
     }
 
+    // Admin: Dashboard showing total books and purchases
     @GetMapping("/admin/dashboard")
     public String showAdminDashboard(Model model, HttpSession session) {
         model.addAttribute("username", session.getAttribute("username"));
@@ -145,6 +155,7 @@ public class BookViewController {
         return "admin-dashboard";
     }
 
+    // Admin: View all purchase records
     @GetMapping("/admin/purchases")
     public String viewPurchases(HttpSession session, Model model) {
         String role = (String) session.getAttribute("role");
