@@ -8,10 +8,25 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/admin/dashboard">Admin Dashboard</a>
+
+        <!-- Dashboard title (admin/user based) -->
+        <a class="navbar-brand" th:if="${session.role == 'admin'}" href="/admin/dashboard">Admin Dashboard</a>
+        <a class="navbar-brand" th:if="${session.role == 'user'}" href="/books/user">User Dashboard</a>
+
         <div class="d-flex">
-            <a href="/books/view" class="btn btn-outline-light me-2">Manage Books</a>
-            <a href="/admin/purchases" class="btn btn-outline-light me-2">View Purchases</a>
+
+            <!-- Admin-only links -->
+            <div th:if="${session.role == 'admin'}">
+                <a href="/books/view" class="btn btn-outline-light me-2">Manage Books</a>
+                <a href="/admin/purchases" class="btn btn-outline-light me-2">View Purchases</a>
+            </div>
+
+            <!-- User-only links -->
+            <div th:if="${session.role == 'user'}">
+                <a href="/books/purchases" class="btn btn-outline-light me-2">My Purchases</a>
+            </div>
+
+            <!-- Common logout button -->
             <a href="/logout" class="btn btn-light">Logout</a>
         </div>
     </div>
